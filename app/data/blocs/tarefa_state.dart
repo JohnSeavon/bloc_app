@@ -21,6 +21,6 @@ class TarefaLoadedState extends TarefaState {
 }
 
 class TarefaErrorState extends TarefaState {
-  final Exception exception;
-  TarefaErrorState({required this.exception}) : super(tarefas: []);
+  final String message;
+  TarefaErrorState({required this.message}) : super(tarefas: []);
 }

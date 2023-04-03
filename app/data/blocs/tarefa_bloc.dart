@@ -17,9 +17,14 @@ class TarefaBloc extends Bloc<TarefaEvent, TarefaState> {
     emit(TarefaLoadingState());
 
     if (event is GetTarefas) {
-      tarefas = await _repository.getTarefas();
+      tarefas = _repository.tarefas;
     } else if (event is PostTarefas) {
-      tarefas = await _repository.postTarefa(tarefa: event.tarefa);
+      if (event.tarefa.nome.isNotEmpty) {
+        tarefas = await _repository.postTarefa(tarefa: event.tarefa);
+      } else {
+        tarefas = _repository.tarefas;
+        emit(TarefaErrorState(message: 'Empty text field'));
+      }
     } else if (event is DeleteTarefa) {
       tarefas = await _repository.deleteTarefa(tarefa: event.tarefa);
     }
